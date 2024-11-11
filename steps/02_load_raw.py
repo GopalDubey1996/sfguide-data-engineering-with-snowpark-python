@@ -23,6 +23,7 @@ TABLE_DICT = {
 # SNOWFLAKE ADVANTAGE: Snowflake Tables (not file-based)
 
 def load_raw_table(session, tname=None, s3dir=None, year=None, schema=None):
+    _ = session.sql("USE DATABASE HOL_DB").collect()
     session.use_schema(schema)
     if year is None:
         location = "@external.frostbyte_raw_stage/{}/{}".format(s3dir, tname)
@@ -73,3 +74,6 @@ if __name__ == "__main__":
     with Session.builder.getOrCreate() as session:
         load_all_raw_tables(session)
 #        validate_raw_tables(session)
+
+
+
